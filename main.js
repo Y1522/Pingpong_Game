@@ -2,6 +2,9 @@ const canvas = document.getElementById("game");
 const context = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+const pauseBtn = document.getElementById("pauseBtn");
+const restartBtn = document.getElementById("restartBtn");
+let isPaused = false;
 
 const paddleWidth = 18,
     paddleHeight = 120,
@@ -87,6 +90,56 @@ function handleTouch(event) {
 }
 canvas.addEventListener('touchstart', handleTouch, { passive: false });
 canvas.addEventListener('touchmove', handleTouch, { passive: false });
+
+// Pause/Resume controls
+function togglePause(){
+    isPaused = !isPaused;
+    if (pauseBtn){
+        pauseBtn.textContent = isPaused ? 'Resume' : 'Pause';
+        pauseBtn.setAttribute('aria-pressed', isPaused ? 'true' : 'false');
+    }
+}
+if (pauseBtn){
+    pauseBtn.addEventListener('click', togglePause);
+}
+window.addEventListener('keydown', function(e){
+    if (e.key === 'p' || e.key === 'P' || e.key === 'Escape'){
+        togglePause();
+    }
+});
+
+// Restart logic
+function restartGame(){
+    // Reset scores
+    user.score = 0;
+    com.score = 0;
+
+    // Center paddles
+    user.x = 0;
+    user.y = canvas.height / 2 - user.height / 2;
+    com.x = canvas.width - com.width;
+    com.y = canvas.height / 2 - com.height / 2;
+
+    // Reset ball state
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
+    ball.speed = initialBallSpeed;
+    ball.velocityX = initialBallSpeed;
+    ball.velocityY = initialBallSpeed;
+
+    // Unpause
+    if (isPaused){
+        togglePause();
+    }
+}
+if (restartBtn){
+    restartBtn.addEventListener('click', restartGame);
+}
+window.addEventListener('keydown', function(e){
+    if (e.key === 'r' || e.key === 'R'){
+        restartGame();
+    }
+});
 
 // Resize canvas on window/orientation changes while preserving positions
 function resizeGame(preservePositions = true) {
@@ -202,8 +255,15 @@ function render() {
 
 // Run game loop
 function gameLoop() {
-    update();
+    if (!isPaused){
+        update();
+    }
     render();
+    if (isPaused){
+        context.fillStyle = "rgba(0,0,0,0.35)";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        drawText('PAUSED', canvas.width / 2, canvas.height / 2, 'WHITE', 80, 'bold');
+    }
 }
 
 // Set gameLoop to run at 60 frame per second
