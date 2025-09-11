@@ -14,4 +14,61 @@ html, body, #game {
     display: block;
     background: black;
 }
-            
+
+#pauseBtn{
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    padding: 10px 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.12);
+    color: #ffffff;
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+#pauseBtn:active{
+    transform: scale(0.98);
+}
+
+@media (max-width: 600px){
+    #pauseBtn{
+        font-size: 18px;
+        padding: 12px 18px;
+    }
+}
+
+#restartBtn{
+    position: fixed;
+    top: 12px;
+    right: 112px;
+    z-index: 10;
+    padding: 10px 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.12);
+    color: #ffffff;
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+#restartBtn:active{
+    transform: scale(0.98);
+}
+
+@media (max-width: 600px){
+    #restartBtn{
+        font-size: 18px;
+        padding: 12px 18px;
+        right: 108px;
+    }
+}
+                    
