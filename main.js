@@ -8,10 +8,10 @@ let isPaused = false;
 
 const paddleWidth = 18,
     paddleHeight = 120,
-    paddleSpeed = 50,
+    paddleSpeed = 5,
     ballRadius = 12,
-    initialBallSpeed = 50,
-    maxBallSpeed = 200,
+    initialBallSpeed = 8,
+    maxBallSpeed = 30,
     netWidth = 5,
     netColor = "Gray";
 
